@@ -1,3 +1,6 @@
+require 'pg'
+require_relative 'recipe'
+
 class Ingredient
 
   #query database
@@ -5,6 +8,21 @@ class Ingredient
   #Ingredient object must contain:
         # 1) ingredient name
         # 2) recipe_id
+
+  def initialize(id, name, recipe_id)
+    def db_connection
+      begin
+        connection = PG.connect(dbname: 'recipes')
+        yield(connection)
+      ensure
+        connection.close
+      end
+    end
+
+    @id = id
+    @name = name
+    @recipe_id = recipe_id
+  end
 
   #returns name of ingredient, to be accessed in Recipe class
   def name
