@@ -1,3 +1,6 @@
+
+
+<!--@recipe is a Recipe class object-->
 <h1><%= @recipe.name %></h1>
 
 <h3>Description</h3>
@@ -8,13 +11,14 @@
 
 <h2>Ingredients</h2>
 <ul>
-
   <!--@recipe array of recipe objects-->
   <!--calls ingredients method-->
   <!--ingred method: returns array of ingredient objects-->
-  <% @recipe.ingredients.each do |ingredient| %>
+<% @recipe.ingredients.each do |ingredient| %>
     <li><%= ingredient.name %></li>
   <% end %>
 </ul>
+
+
 
 <p><a href="/recipes">Back to Recipes</a></p>

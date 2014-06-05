@@ -1,5 +1,5 @@
 require 'pg'
-require_relative 'recipe'
+require_relative "recipe"
 
 class Ingredient
 
@@ -13,34 +13,6 @@ class Ingredient
     @id = id
     @name = name
     @recipe_id = recipe_id
-  end
-
-  def self.db_connection
-    begin
-      connection = PG.connect(dbname: 'recipes')
-      yield(connection)
-    ensure
-      connection.close
-    end
-  end
-
-  def self.find
-    ingredient_query = "SELECT id, name, recipe_id FROM recipes"
-    @ingredients = db_connection do |conn|
-      conn.exec(ingredient_query)
-    end
-
-    @ingredients = []
-
-    @recipes_hash.each do |recipe|
-      recipe_id = recipe["id"]
-      name = recipe["name"]
-      description = recipe["description"]
-      instructions = recipe["instructions"]
-      recipe_object = Recipe.new(recipe_id, name, description, instructions)
-      @recipes << recipe_object
-    end
-    @recipes
   end
 
   #returns name of ingredient, to be accessed in Recipe class

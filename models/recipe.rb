@@ -1,17 +1,19 @@
 require 'pg'
+require 'pry'
 require_relative "ingredient"
 
 class Recipe
 
-  attr_reader :id, :name, :description, :instructions
+  attr_reader :id, :name, :description, :instructions, :ingredients
 
   #query database
   #return an array of Recipe objects
-  def initialize(id, name, description, instructions)
+  def initialize(id, name, description, instructions, ingredients = nil)
     @id = id
     @name = name
     @description = description
     @instructions = instructions
+    @ingredients = ingredients
   end
 
   def self.db_connection
@@ -44,10 +46,39 @@ class Recipe
     @recipes
   end
 
-  #returns an array of Ingredient objects
-  def ingredients
+  def self.find(params_recipe_id)
+    @params_recipe_id = params_recipe_id
+    one_recipe_query = "SELECT id, name, description, instructions
+                        FROM recipes WHERE id = $1"
+    one_recipe_hash = db_connection do |conn|
+      conn.exec_params(one_recipe_query, [@params_recipe_id])
+    end
 
+    id = one_recipe_hash[0]["id"]
+    name = one_recipe_hash[0]["name"]
+    description = one_recipe_hash[0]["description"]
+    instructions = one_recipe_hash[0]["instructions"]
+
+
+    ingredients_query = "SELECT id, name, recipe_id
+                          FROM ingredients WHERE recipe_id = $1"
+    ingredients_hash = db_connection do |conn|
+      conn.exec_params(ingredients_query, [id])
+    end
+
+    ingredients = []
+    ingredients_hash.each do |ingredient|
+      id = ingredient["id"]
+      name = ingredient["name"]
+      recipe_id = ingredient["recipe_id"]
+      ingredient_object = Ingredient.new(id, name, recipe_id)
+      ingredients << ingredient_object
+    end
+
+    @recipe = Recipe.new(id, name, description, instructions, ingredients)
+    @recipe
   end
+
 
 
 end
