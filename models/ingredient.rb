@@ -19,6 +19,12 @@ class Ingredient
       end
     end
 
+    ingredient_query = "SELECT id, name, recipe_id FROM recipes"
+
+    @ingredients = db_connection do |conn|
+      conn.exec(ingredient_query)
+    end
+
     @id = id
     @name = name
     @recipe_id = recipe_id
