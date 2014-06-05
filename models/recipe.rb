@@ -3,7 +3,7 @@ require_relative "ingredient"
 
 class Recipe
 
-  attr_reader :recipes
+  attr_reader :id, :name, :description, :instructions
 
   #query database
   #return an array of Recipe objects
@@ -42,26 +42,6 @@ class Recipe
       @recipes << recipe_object
     end
     @recipes
-  end
-
-  #returns id of recipe
-  def id
-    @id
-  end
-
-  #returns name of recipe
-  def name
-    @name
-  end
-
-  #return recipe description
-  def description
-    @description
-  end
-
-  #return recipe instructions
-  def instructions
-    @instructions
   end
 
   #returns an array of Ingredient objects
