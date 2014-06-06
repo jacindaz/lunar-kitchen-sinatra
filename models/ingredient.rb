@@ -9,15 +9,15 @@ class Ingredient
         # 1) ingredient name
         # 2) recipe_id
 
-  def initialize(id, name, recipe_id)
+  def initialize(id, ingredient_name, recipe_id)
     @id = id
-    @name = name
+    @ingredient_name = ingredient_name
     @recipe_id = recipe_id
   end
 
   #returns name of ingredient, to be accessed in Recipe class
-  def name
-    @name
+  def ingredient_name
+    @ingredient_name
   end
 
   #returns ingredient id

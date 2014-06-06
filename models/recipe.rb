@@ -60,22 +60,22 @@ class Recipe
     instructions = one_recipe_hash[0]["instructions"]
 
 
-    ingredients_query = "SELECT id, name, recipe_id
+    ingredients_query = "SELECT id, name AS ingredient_name, recipe_id
                           FROM ingredients WHERE recipe_id = $1"
     ingredients_hash = db_connection do |conn|
       conn.exec_params(ingredients_query, [id])
     end
 
-    ingredients = []
+    @ingredients = []
     ingredients_hash.each do |ingredient|
       id = ingredient["id"]
-      name = ingredient["name"]
+      ingredient_name = ingredient["ingredient_name"]
       recipe_id = ingredient["recipe_id"]
-      ingredient_object = Ingredient.new(id, name, recipe_id)
-      ingredients << ingredient_object
+      ingredient_object = Ingredient.new(id, ingredient_name, recipe_id)
+      @ingredients << ingredient_object
     end
 
-    @recipe = Recipe.new(id, name, description, instructions, ingredients)
+    @recipe = Recipe.new(id, name, description, instructions, @ingredients)
     @recipe
   end
 
