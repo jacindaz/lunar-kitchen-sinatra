@@ -1,7 +1,8 @@
 require 'pg'
 require_relative "recipe"
 
-class Ingredient
+class Ingredient < ActiveRecord::Base
+  belongs_to :recipe
 
   #query database
   #return an array of Ingredient objects

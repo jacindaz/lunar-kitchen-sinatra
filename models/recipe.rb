@@ -2,7 +2,18 @@ require 'pg'
 require 'pry'
 require_relative "ingredient"
 
-class Recipe
+class CreateRecipes < ActiveRecord::Migration
+  def change
+    create_table "recipes", force: true do |t|
+      t.string :name
+      t.string :description
+      t.string :instructions
+    end
+  end
+end
+
+class Recipe < ActiveRecord::Base
+  has_many :ingredients
 
   attr_reader :id, :name, :description, :instructions, :ingredients
 
