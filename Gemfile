@@ -1,12 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'sinatra-reloader'
-gem 'pg'
 
-group :development, :test do
+gem 'pg'
+gem 'rake'
+gem 'sinatra'
+gem 'sinatra-activerecord'
+gem 'sinatra-contrib'
+gem 'sinatra-flash'
+
+group :test, :development do
+  gem 'capybara'
+  gem 'dotenv'
   gem 'pry'
   gem 'rspec'
-  gem 'capybara'
-  gem 'launchy'
 end

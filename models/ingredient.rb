@@ -1,4 +1,5 @@
 require 'pg'
+require "sinatra/activerecord"
 require_relative "recipe"
 
 class Ingredient < ActiveRecord::Base
